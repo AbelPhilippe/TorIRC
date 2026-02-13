@@ -12,7 +12,7 @@
     (preferably in a virtual machine)
 </h3>
 
-<h2 align="right">
+<h2 align="left">
     If server error:
 </h2>
 
