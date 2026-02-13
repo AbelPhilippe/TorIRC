@@ -65,7 +65,7 @@ banner() {
     ---------------------------------------------------------------
            Script to configure InspIRCd as a Tor Hidden Service
     ---------------------------------------------------------------
-    ================= Developed by Abel Philippe ==================
+    ================= Developed by AbelPhilippe ===================
     \e[0m"
 
 }
