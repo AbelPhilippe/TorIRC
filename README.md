@@ -7,10 +7,20 @@
 <h2 align="center">
     !!! Use with caution !!!
 </h2>
+
 <h3 align="center">
-    preferably in a virtual machine
+    (preferably in a virtual machine)
 </h3>
 
+<h2 align="right">
+    If server error:
+</h2>
+
+```bash
+/quit
+irssi
+/connect -ssl irc.libera.chat 6697
+```
 
 # Cybersec / Hacking / Pentest
 ## Pentest / InfoSec
