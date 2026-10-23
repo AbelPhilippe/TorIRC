@@ -1,28 +1,22 @@
 #!/bin/bash
 
-#==================================================================#
-# Script Name: install.sh
+#=====================================================#
+# Script: install.sh
 # Description: Tor + InspIRCd Hidden Service Installer
 # Author: Abel Philippe
-#==================================================================#
+#=====================================================#
 
 TORRC="/etc/tor/torrc"
 INSPIRCD_CONF="/etc/inspircd/inspircd.conf"
 HS_DIR="/var/lib/tor/hidden_service"
 PORT="6667"
 
-# ===============================
-# Colors
-# ===============================
 BLUE="\e[94m"
 GREEN="\e[92m"
 YELLOW="\e[93m"
 RED="\e[91m"
 RESET="\e[0m"
 
-# ===============================
-# Message Functions
-# ===============================
 
 msg_info() {
     echo -e "${BLUE}[INFO]${RESET} $1"
@@ -49,9 +43,6 @@ pause() {
     sleep 2
 }
 
-# ===============================
-#            Banner
-# ===============================
 banner() {
     echo -e "\e[96m
           ████████╗ ██████╗ ██████╗       ██╗██████╗  ██████╗
@@ -70,18 +61,12 @@ banner() {
 
 }
 
-# ===============================
-# Check Root
-# ===============================
 check_root() {
     if [ "$EUID" -ne 0 ]; then
         msg_error "Run this script as root (sudo)."
     fi
 }
 
-# ===============================
-# Backup Files
-# ===============================
 backup_files() {
 
     msg_info "Creating backups..."
@@ -92,22 +77,16 @@ backup_files() {
     msg_ok "Backups created."
 }
 
-# ===============================
-# Configure Tor
-# ===============================
 config_tor() {
 
     msg_info "Configuring Tor Hidden Service..."
-
-    # Remove old commented lines
+    
     sed -i '/#HiddenServiceDir/d' "$TORRC"
     sed -i '/#HiddenServicePort/d' "$TORRC"
-
-    # Remove duplicate settings
+   
     sed -i '/HiddenServiceDir/d' "$TORRC"
     sed -i '/HiddenServicePort/d' "$TORRC"
 
-    # Add the correct configuration.
     cat <<EOF >> "$TORRC"
 
 # Tor IRC Hidden Service
@@ -119,9 +98,6 @@ EOF
     msg_ok "Tor was configured automatically."
 }
 
-# ===============================
-# Configure InspIRCd
-# ===============================
 config_inspircd() {
 
     msg_info "Opening InspIRCd configuration..."
@@ -133,9 +109,6 @@ config_inspircd() {
     msg_ok "InspIRCd configured."
 }
 
-# ===============================
-# Permissions
-# ===============================
 fix_permissions() {
 
     msg_info "Correcting permissions..."
@@ -148,9 +121,6 @@ fix_permissions() {
     msg_ok "Permissions adjusted."
 }
 
-# ===============================
-# Restart Services
-# ===============================
 restart_services() {
 
     msg_info "Restarting services..."
@@ -164,9 +134,6 @@ restart_services() {
     msg_ok "Active services."
 }
 
-# ===============================
-# Show Onion
-# ===============================
 show_onion() {
 
     separator
@@ -186,9 +153,7 @@ show_onion() {
     separator
 }
 
-# ===============================
-# HexChat Guide
-# ===============================
+
 hexchat_guide() {
 
 separator
@@ -203,7 +168,7 @@ echo -e "${BLUE}
 4) Replace:
    newserver/6697
 
-   Por:
+   To:
    $ONION/$PORT
 
 5) Uncheck:
@@ -217,9 +182,7 @@ ${RESET}"
 separator
 }
 
-# ===============================
-# Final Message
-# ===============================
+
 final_message() {
 
 echo -e "${BLUE}
@@ -233,14 +196,13 @@ sudo service inspircd start && sudo service inspircd status
 After that, terminate this program.
 
 ===========================================================
+
 ${RESET}"
 
 msg_ok "Installation complete."
 }
 
-# ===============================
-# Main
-# ===============================
+
 main() {
 
     banner
